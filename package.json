@@ -1,0 +1,33 @@
+{
+  //项目名称
+  "name": "nodeprojecttest",
+  //版本号（遵守“主版本.次要版本.补丁号”的格式
+  "version": "0.0.0",
+  //description描述你的模块,或者搜索
+  //main字段指定了加载的入口文件，即主文件
+
+  "private": true,
+  // scripts指定了运行脚本命令的npm命令行缩写，比如start指定了运行npm start时，所要执行的命令
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  //devDependencies指定项目开发所需要的模块
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11",
+    "formidable": "~1.2.1",
+    "request": "~2.87.0",
+    "cheerio": "~1.0.0-rc.2",
+    "superagent": "~3.8.3",
+    "superagent-charset": "~1.2.0",
+    "async": "~2.6.1",
+    "eventproxy": "~1.0.0",
+    "ejs": "~2.6.1",
+    "mysql": "~2.15.0",
+    "socket.io": "~2.1.1"
+  }
+}

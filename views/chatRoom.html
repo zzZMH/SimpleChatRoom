@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>简易聊天室</title>
+    <link rel="stylesheet" href="/public/stylesheets/chatRoom.css">
+    <script type="text/javascript" src="/public/javascripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/public/javascripts/socket.io.js"></script>
+    <script type="text/javascript" src="/public/javascripts/getCheckCode.js"></script>
+</head>
+<body>
+    <div class="all">
+        <div class="name">
+            <p><input id="name" type="text" placeholder="请输入昵称..." autocomplete="off"></p>
+            <p><input id="pwd" type="password" placeholder="请输入密码..." autocomplete="off"></p>
+            <div id="checkCont"><input id="yzm" type="text" placeholder="验证码" autocomplete="off"></div><div id="checkCode"></div>
+            <p><button id="btnSub" onclick="login()" >确定</button></p>
+            <div id="warnInfo"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var socket = io();
+    var option = {
+        id: "checkCode",
+        width: 90,
+        height: 34,
+        type: "mix",
+        len: 4
+    };
+    var ckCode = new CheckCode(option);
+
+    //点击事件(相当于触发)
+    function login() {
+        var name = $("#name").val();
+        var pwd = $("#pwd").val();
+        var yzm = $("#yzm").val();
+        var data = {"name": name, "pwd": pwd};
+        if(!name || name == null || name === ""){
+            $("#warnInfo").html("昵称不能为空！");
+            return;
+        }
+        if(!pwd || pwd == null || pwd === ""){
+            $("#warnInfo").html("密码不能为空！");
+            return;
+        }
+        if(!yzm || yzm == null || yzm === ""){
+            $("#warnInfo").html("验证码不能为空！");
+            return;
+        }debugger
+        if(yzm.toLowerCase() !== ckCode.options.codeVal.toLowerCase()){
+            $("#warnInfo").html("验证码错误！");
+            ckCode._init();
+            return;
+        }
+        $("#warnInfo").html("");
+        console.log("前台发送："+JSON.stringify(data));
+        socket.emit('login', data);
+    }
+
+    //监听事件(相当于回调)
+    socket.on('doLogin', function (data) {
+        console.log("前台接受："+JSON.stringify(data));
+        $("#name").val(data.name);
+        $("#pwd").val(data.pwd);
+    });
+</script>
